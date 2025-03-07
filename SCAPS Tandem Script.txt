@@ -1,0 +1,43 @@
+// SCAPS script 
+
+clear all 
+clear actions
+
+action light 
+
+action iv.startv 0
+action iv.stopv 3
+
+action iv.increment 0.02
+action iv.checkaction
+action iv.stopaftervoc
+
+//Simulate the Top Cell 
+load definitionfile Top Cell.def
+calculate singleshot 
+get iv zu
+
+//Simulate the Bottom Cell
+load definitionfile Bottom Cell.def
+calculate singleshot
+get iv vw
+
+//Calculate the Series Connection IV Curve
+math series xyzuvw nz
+
+Visualize the Results
+plot draw zu
+plot draw vw
+plot draw xy
+
+//Extract the Solar Cell Characteristics
+math characteristics.all cxy
+math characteristics.voc xxy
+math characteristics.jsc yxy
+math characteristics.ff zxy
+math characteristics.eta uxy
+math characteristics.vmpp vxy
+math characteristics.jmpp wxy 
+
+//Show Script Variables
+show scriptvariables
